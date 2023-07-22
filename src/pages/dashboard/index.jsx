@@ -9,15 +9,19 @@
  * ------------------------------------
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import { Segmented, Space } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import { Card, Col, Row, Statistic } from 'antd';
 import ReactECharts from 'echarts-for-react';
+import { useDispatch,useSelector } from 'react-redux';
+import { getDashboardMetricsAction } from "../../redux/slice/dashboard/dashboardAction";
+
 
 function Dashboard() {
 
+  const dispatch = useDispatch();
   const handleTimeChange = (value) => {
     console.log("Value", value)
   }
@@ -40,6 +44,20 @@ function Dashboard() {
       data: [5, 20, 36, 10, 10, 20,11,33,22,44]
     }]
   };
+
+  useEffect(() => {
+    console.log("CAll API")
+    dispatch(getDashboardMetricsAction());
+  },[])
+
+  const getDashApiVal = useSelector(
+    (state) => state.dashboard.dashboardMetricsValueSucc
+  );
+
+  useEffect(() => {
+    console.log("getDashApiVal=========",getDashApiVal)
+  },[getDashApiVal])
+
 
   return (
     <div>
